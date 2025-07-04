@@ -103,6 +103,9 @@ allFilters := [26]Filter{
 // Define a global variable for the active renderer index
 ACTIVE_RENDERER_INDEX: u32 = 0
 
+// Global variable to track which menu is open
+OPEN_MENU: string = ""
+
 // Keep the original menu_item_clicked function
 menu_item_clicked :: proc(category: string, item: string) {
     fmt.printf("You clicked on %s-%s\n", category, item)
@@ -373,8 +376,6 @@ FilterScrollContainer :: proc() {
 createLayout :: proc() -> clay.ClayArray(clay.RenderCommand) {
     clay.BeginLayout()
 
-    open_menu: string = ""
-
     if clay.UI()({
         id = clay.ID("MainContainer"),
         layout = {
@@ -385,7 +386,7 @@ createLayout :: proc() -> clay.ClayArray(clay.RenderCommand) {
         backgroundColor = COLOR_LIGHT,
     }) {
         // Menu bar at top
-        MenuBar(&open_menu)
+        MenuBar(&OPEN_MENU)
 
         // Text scroll container (200 rows)
         TextScrollContainer()
